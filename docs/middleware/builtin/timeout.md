@@ -56,6 +56,12 @@ app.get('/api/long-process', async (c) => {
 })
 ```
 
+::: tip
+
+Use a factory function when each timeout needs a fresh error stack, such as when reporting exceptions to an observability service. Passing an exception instance reuses that instance and its construction-time stack for every timeout, which can affect stack attribution and error fingerprinting.
+
+:::
+
 ## Notes
 
 - The duration for the timeout can be specified in milliseconds. The middleware will automatically reject the promise and potentially throw an error if the specified duration is exceeded.
