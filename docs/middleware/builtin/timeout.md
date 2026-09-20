@@ -56,9 +56,18 @@ app.get('/api/long-process', async (c) => {
 })
 ```
 
-::: tip
+::: tip Fresh error stacks
 
-Use a factory function when each timeout needs a fresh error stack, such as when reporting exceptions to an observability service. Passing an exception instance reuses that instance and its construction-time stack for every timeout, which can affect stack attribution and error fingerprinting.
+Use a factory when timeout errors are reported to an observability service:
+
+```ts
+timeout(
+  5000,
+  () => new HTTPException(504, { message: 'Gateway Timeout' })
+)
+```
+
+Passing an exception instance reuses its construction-time stack for every timeout, which can affect stack attribution and error fingerprinting.
 
 :::
 
